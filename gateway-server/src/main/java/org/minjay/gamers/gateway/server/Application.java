@@ -1,5 +1,6 @@
 package org.minjay.gamers.gateway.server;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.minjay.gamers.gateway.server.filter.ExtractTokenToJwtFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +23,7 @@ public class Application {
     }
 
     @Bean
-    public ValueOperations<String, String> valueOperations(RedisTemplate redisTemplate) {
+    public ValueOperations<String, String> valueOperations(RedisTemplate<String, String> redisTemplate) {
         return redisTemplate.opsForValue();
     }
 

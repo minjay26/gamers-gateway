@@ -10,17 +10,16 @@ management:
       exposure:
         include: "*"
 
-
 spring:
   application:
     name: gamers-gateway
   cloud:
     gateway:
       routes:
-        - id: user-dynamic-service
-          uri: https://www.baidu.com
+        - id: dynamics-service
+          uri: localhost:2603
           predicates:
-            - Path=/dynamics
+            - Path=/api/**
       discovery:
         locator:
           enabled: true
@@ -28,3 +27,4 @@ spring:
   redis:
     host: localhost
     port: 6379
+    password: 123456

@@ -8,6 +8,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
@@ -21,7 +22,9 @@ public class ExtractTokenToJwtFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String token = exchange.getAttributeOrDefault("x-auth-token", null);
+        ServerHttpRequest request = exchange.getRequest();
+
+        String token = request.getHeaders().getFirst("x-auth-token");
         ServerHttpResponse response = exchange.getResponse();
         if (StringUtils.isEmpty(token)) {
             response.setStatusCode(HttpStatus.FORBIDDEN);
@@ -29,11 +32,15 @@ public class ExtractTokenToJwtFilter implements GlobalFilter, Ordered {
         }
         String jwtToken = valueOperations.get(JWT_REDIS_KEY_PREFIX + token);
         DecodedJWT jwt = JWT.decode(jwtToken);
-        return null;
+        ServerHttpRequest.Builder mutate = request.mutate();
+        mutate.header("Authorization", "Bearer " + jwt.getSubject());
+        chain.filter(exchange.mutate().request(mutate.build()).build());
+
+        return Mono.empty();
     }
 
     @Override
     public int getOrder() {
-        return -1000;
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }
