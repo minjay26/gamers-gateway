@@ -1,7 +1,6 @@
 package org.minjay.gamers.gateway.server;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.minjay.gamers.gateway.server.filter.ExtractTokenToJwtFilter;
+import org.minjay.gamers.gateway.server.filter.ExtractTokenToJwtPreFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +27,8 @@ public class Application {
     }
 
     @Bean
-    public ExtractTokenToJwtFilter extractTokenToJwtFilter() {
-        return new ExtractTokenToJwtFilter();
+    public ExtractTokenToJwtPreFilter extractTokenToJwtFilter() {
+        return new ExtractTokenToJwtPreFilter();
     }
 
 }

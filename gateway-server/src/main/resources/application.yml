@@ -10,19 +10,13 @@ management:
       exposure:
         include: "*"
 
-spring:
-  application:
-    name: gamers-gateway
-  cloud:
-    gateway:
-      routes:
-        - id: dynamics-service
-          uri: localhost:2603
-          predicates:
-            - Path=/api/**
-      discovery:
-        locator:
-          enabled: true
+zuul:
+  sensitive-headers:
+  routes:
+    accounts:
+      path: /dynamics/**
+      url: http://localhost:18082
+      strip-prefix: fales
 
   redis:
     host: localhost
