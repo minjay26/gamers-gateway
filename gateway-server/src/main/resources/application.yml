@@ -13,10 +13,18 @@ management:
 zuul:
   sensitive-headers:
   routes:
-    accounts:
+    dynamics:
       path: /dynamics/**
-      url: http://localhost:18082
-      strip-prefix: fales
+      url: http://localhost:2604
+      strip-prefix: false
+    accounts:
+      path: /accounts/**
+      url: http://localhost:2601
+      strip-prefix: false
+    login:
+      path: /login/**
+      url: http://localhost:2601
+      strip-prefix: false
 
   redis:
     host: localhost
