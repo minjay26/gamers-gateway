@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: gamers-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        register-enabled: false

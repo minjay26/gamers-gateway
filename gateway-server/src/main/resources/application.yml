@@ -15,7 +15,7 @@ zuul:
   routes:
     dynamics:
       path: /dynamics/**
-      url: http://localhost:2604
+      serviceId: gamers-dynamic
       strip-prefix: false
     accounts:
       path: /accounts/**
