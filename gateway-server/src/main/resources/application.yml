@@ -19,11 +19,11 @@ zuul:
       strip-prefix: false
     accounts:
       path: /accounts/**
-      url: http://localhost:2601
+      url: gamers-accounts
       strip-prefix: false
     login:
       path: /login/**
-      url: http://localhost:2601
+      serviceId: gamers-accounts
       strip-prefix: false
 
   redis:
